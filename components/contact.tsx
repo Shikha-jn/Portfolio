@@ -6,7 +6,7 @@ import { Section } from "./section";
 import { GlowCard } from "./reveal";
 
 const field =
-  "mt-2 w-full rounded-xl border border-line bg-ink px-4 py-3 text-fg placeholder:text-muted/60 transition-colors focus:border-cyan focus:outline-none";
+  "mt-2 w-full rounded-xl border border-line bg-ink px-4 py-3 text-fg placeholder:text-muted/60 transition-colors focus:border-(--accent) focus:outline-none";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
@@ -77,14 +77,14 @@ export function Contact() {
             </label>
             <button
               type="submit"
-              className="inline-flex min-h-11 items-center rounded-full bg-cyan px-6 font-medium text-ink shadow-[0_0_30px_-6px] shadow-cyan/60 transition-all hover:-translate-y-0.5 hover:bg-fg"
+              className="inline-flex min-h-11 items-center rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-6 font-semibold text-ink shadow-[0_10px_40px_-10px] shadow-violet transition-transform hover:-translate-y-0.5"
             >
               Send message
             </button>
             <p
               role="status"
               aria-live="polite"
-              className="min-h-6 text-sm text-cyan"
+              className="min-h-6 text-sm text-mint"
             >
               {sent &&
                 "Your email app should open with the message ready to send."}
@@ -97,7 +97,7 @@ export function Contact() {
             <p className="text-sm text-muted">Email</p>
             <a
               href={`mailto:${profile.email}`}
-              className="break-all font-display text-xl font-semibold text-cyan underline decoration-cyan/40 underline-offset-4 hover:decoration-cyan"
+              className="break-all font-display text-xl font-semibold text-(--accent) underline decoration-(--accent)/40 underline-offset-4 hover:decoration-(--accent)"
             >
               {profile.email}
             </a>

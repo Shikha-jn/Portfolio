@@ -1,6 +1,14 @@
 import type { ReactNode } from "react";
 import { Reveal } from "./reveal";
 
+const accents: Record<string, string> = {
+  experience: "cyan",
+  projects: "pink",
+  skills: "amber",
+  education: "mint",
+  contact: "violet",
+};
+
 interface SectionProps {
   id: string;
   title: string;
@@ -12,8 +20,9 @@ export function Section({ id, title, intro, children }: SectionProps) {
   return (
     <section
       id={id}
+      data-accent={accents[id] ?? "cyan"}
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-16 border-t border-line py-16 md:py-24"
+      className="scroll-mt-16 border-t border-line/70 py-16 md:py-24"
     >
       <div className="mx-auto grid max-w-6xl gap-8 px-5 sm:px-8 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-4">
@@ -21,13 +30,13 @@ export function Section({ id, title, intro, children }: SectionProps) {
             <Reveal>
               <h2
                 id={`${id}-title`}
-                className="font-display text-3xl font-semibold tracking-tight sm:text-4xl"
+                className="font-display text-3xl font-semibold tracking-tight sm:text-5xl"
               >
                 {title}
               </h2>
               <span
                 aria-hidden="true"
-                className="mt-4 block h-1 w-12 rounded-full bg-gradient-to-r from-cyan to-violet"
+                className="mt-4 block h-1.5 w-16 rounded-full bg-(--accent) shadow-[0_0_20px_var(--accent)]"
               />
               {intro && <p className="mt-4 max-w-sm text-muted">{intro}</p>}
             </Reveal>
@@ -43,7 +52,7 @@ export function Section({ id, title, intro, children }: SectionProps) {
 
 export function Tag({ children }: { children: ReactNode }) {
   return (
-    <li className="rounded-md border border-line px-2.5 py-1 text-sm text-muted transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan hover:text-cyan">
+    <li className="rounded-full border border-(--accent)/35 bg-(--accent)/10 px-3 py-1 text-sm text-(--accent) transition-transform duration-200 hover:-translate-y-0.5">
       {children}
     </li>
   );

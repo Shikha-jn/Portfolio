@@ -5,19 +5,6 @@ import { navigation, profile } from "@/data/data";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setProgress(max > 0 ? (h.scrollTop / max) * 100 : 0);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -29,48 +16,25 @@ export function Header() {
   const links = navigation.filter((n) => n.href !== "#contact");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-xl">
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-cyan to-violet"
-        style={{ transform: `scaleX(${progress / 100})` }}
-      />
-      <nav
-        aria-label="Primary"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8"
-      >
-        <a
-          href="#top"
-          className="font-display text-lg font-semibold tracking-tight"
-        >
-          {profile.name}
+    <header className="portfolio-header sticky top-0 z-50 border-b border-line/70 bg-ink/85 backdrop-blur-xl">
+      <nav aria-label="Primary" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+        <a href="#top" className="brand-lockup group flex shrink-0 items-center gap-3">
+          <span className="brand-mark" aria-hidden="true"><span /></span>
+          <span className="font-display text-base font-semibold tracking-[-.04em]">{profile.firstName}<span className="text-cyan">.</span></span>
+          <span className="hidden border-l border-line pl-3 text-[10px] uppercase tracking-[.18em] text-muted lg:block">Product engineer</span>
         </a>
-
-        <ul className="hidden items-center gap-8 md:flex">
-          {links.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="group relative text-sm text-muted transition-colors hover:text-fg"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-cyan transition-transform duration-300 group-hover:scale-x-100" />
-              </a>
-            </li>
+        <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[.03] p-1 md:flex">
+          {links.map((item, index) => (
+            <a key={item.href} href={item.href} className="nav-link" data-index={`0${index + 1}`}>{item.label}</a>
           ))}
-          <li>
-            <a
-              href="#contact"
-              className="inline-flex min-h-9 items-center rounded-full bg-cyan px-4 text-sm font-medium text-ink transition-colors hover:bg-fg"
-            >
-              Contact us
-            </a>
-          </li>
-        </ul>
-
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="hidden items-center gap-2 text-[10px] uppercase tracking-[.16em] text-muted lg:flex"><span className="status-dot" /> Available</span>
+          <a href="#contact" className="header-cta"><span>Start a project</span><span aria-hidden="true">↗</span></a>
+        </div>
         <button
           type="button"
-          className="-mr-2 inline-flex size-11 items-center justify-center rounded-md md:hidden"
+          className="menu-button inline-flex size-10 items-center justify-center rounded-full md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}

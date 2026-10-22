@@ -1,5 +1,8 @@
 import { projects } from "@/data/data";
 import { Section, Tag } from "./section";
+import { GlowCard } from "./reveal";
+
+const palette = ["cyan", "pink", "amber", "mint", "violet"];
 
 export function Projects() {
   return (
@@ -8,47 +11,24 @@ export function Projects() {
       title="Projects"
       intro="Apps I've shipped, maintained or built to learn."
     >
-      <ul className="divide-y divide-line">
-        {projects.map((project) => (
-          <li key={project.id} className="py-10 first:pt-0 last:pb-0">
-            <article>
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <h3 className="font-display text-2xl font-semibold">{project.name}</h3>
-                <p className="shrink-0 text-sm text-muted">{project.period}</p>
-              </div>
-              <p className="mt-1 text-violet">{project.context}</p>
-
-              <p className="mt-4 max-w-prose">{project.description}</p>
-
-              <ul className="mt-4 list-disc space-y-2 pl-5 text-muted marker:text-line">
-                {project.highlights.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-
-              <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technologies used">
-                {project.stack.map((tech) => (
-                  <Tag key={tech}>{tech}</Tag>
-                ))}
-              </ul>
-
-              {project.links && (
-                <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
-                  {project.links.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-cyan underline decoration-cyan/40 underline-offset-4 transition-colors hover:decoration-cyan"
-                    >
-                      {link.label}
-                      <span className="sr-only"> for {project.name} (opens in a new tab)</span>
-                    </a>
-                  ))}
-                </p>
-              )}
-            </article>
+      <ul className="project-gallery">
+        {projects.map((project, i) => (
+          <li key={project.id} data-accent={palette[i % palette.length]} className={`project-item project-item-${i + 1}`}>
+            <GlowCard className="project-card h-full overflow-hidden">
+              <div className="project-index">0{i + 1}</div>
+              <article className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-9">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[.18em] text-(--accent)">{project.context} {project.period && <span className="text-muted">/ {project.period}</span>}</p>
+                  <h3 className="mt-5 max-w-md font-display text-3xl font-semibold tracking-[-.04em] sm:text-4xl">{project.name}</h3>
+                  <p className="mt-4 max-w-lg text-muted">{project.description}</p>
+                  <ul className="mt-5 max-w-xl list-disc space-y-2 pl-5 text-sm text-muted marker:text-(--accent)">{project.highlights.slice(0, 2).map((point) => <li key={point}>{point}</li>)}</ul>
+                </div>
+                <div className="mt-8 flex flex-wrap items-end justify-between gap-5">
+                  <ul className="flex max-w-md flex-wrap gap-2" aria-label="Technologies used">{project.stack.map((tech) => <Tag key={tech}>{tech}</Tag>)}</ul>
+                  {project.links?.map((link) => <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="project-link">View project <span aria-hidden="true">↗</span><span className="sr-only">{link.label} for {project.name} (opens in a new tab)</span></a>)}
+                </div>
+              </article>
+            </GlowCard>
           </li>
         ))}
       </ul>

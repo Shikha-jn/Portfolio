@@ -1,121 +1,47 @@
 import Image from "next/image";
-import { profile, skills } from "@/data/data";
+import { profile } from "@/data/data";
 import heroImage from "@/public/images/shikha-hero.webp";
+const chip =
+  "chip absolute hidden rounded-2xl border border-white/15 bg-surface/70 px-4 py-2 text-sm font-medium backdrop-blur-md sm:block";
 
 export function Hero() {
-  const tech = skills.flatMap((g) => g.items);
   return (
     <>
-      <section
-        id="top"
-        aria-labelledby="hero-title"
-        className="relative mx-auto grid max-w-6xl gap-10 px-5 pb-16 pt-10 sm:px-8 md:pb-24 md:pt-16 lg:grid-cols-12 lg:items-center lg:gap-12"
-      >
+      <section id="top" aria-labelledby="hero-title" className="hero-stage relative overflow-hidden px-5 pb-20 pt-8 sm:px-8 lg:min-h-[calc(100svh-4rem)] lg:px-12 lg:pb-12 lg:pt-14">
         <div className="aurora" aria-hidden="true" />
-        <div className="lg:col-span-5">
-          <p
-            className="hero-reveal inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-3 py-1 text-sm text-muted backdrop-blur"
-            style={{ "--i": 0 } as React.CSSProperties}
-          >
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-cyan opacity-70" />
-              <span className="relative inline-flex size-2 rounded-full bg-cyan" />
-            </span>
-            {profile.status}
-          </p>
-
-          <h1
-            id="hero-title"
-            className="hero-reveal mt-6 font-display text-[clamp(3.75rem,14vw,6.75rem)] font-bold leading-[0.88] tracking-tighter"
-            style={{ "--i": 1 } as React.CSSProperties}
-          >
-            {profile.firstName}
-            <br />
-            <span className="gradient-text">{profile.lastName}</span>
-          </h1>
-
-          <p
-            className="hero-reveal mt-6 font-display text-xl font-medium text-violet sm:text-2xl"
-            style={{ "--i": 2 } as React.CSSProperties}
-          >
-            {profile.role}
-          </p>
-
-          <div
-            className="hero-reveal mt-5 max-w-prose space-y-4 text-muted"
-            style={{ "--i": 3 } as React.CSSProperties}
-          >
-            {profile.summary.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
+        <div className="hero-grid" aria-hidden="true" />
+        <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-[.82fr_1.18fr]">
+          <div className="relative z-10 max-w-xl lg:pl-8">
+            <p className="hero-reveal eyebrow" style={{ "--i": 0 } as React.CSSProperties}>APP DEVELOPER <span>/</span> MOBILE &amp; FULL STACK</p>
+            <h1 id="hero-title" className="hero-reveal mt-6 font-display text-[clamp(3.4rem,8vw,7.2rem)] font-semibold leading-[.86] tracking-[-.07em]" style={{ "--i": 1 } as React.CSSProperties}>
+              I build apps<br /><span className="gradient-text">that feel alive.</span>
+            </h1>
+            <p className="hero-reveal mt-7 max-w-lg text-base leading-7 text-muted sm:text-lg" style={{ "--i": 2 } as React.CSSProperties}>
+              I develop complete digital products, from intuitive mobile experiences and scalable backends to deployment and production.
+            </p>
+            <div className="hero-reveal mt-9 flex flex-wrap gap-3" style={{ "--i": 3 } as React.CSSProperties}>
+              <a href="#projects" className="btn-primary">Explore my work <span aria-hidden="true">↗</span></a>
+              <a href="#contact" className="btn-ghost">Let&apos;s connect</a>
+            </div>
+            <div className="hero-reveal mt-12 flex items-center gap-4 text-xs uppercase tracking-[.18em] text-muted" style={{ "--i": 4 } as React.CSSProperties}>
+              <span className="status-dot" /> {profile.status} <span className="text-line" /> {profile.location.split(",")[0]}
+            </div>
           </div>
 
-          <div
-            className="hero-reveal mt-8 flex flex-wrap gap-3"
-            style={{ "--i": 4 } as React.CSSProperties}
-          >
-            <a
-              href="#projects"
-              className="inline-flex min-h-11 items-center rounded-full bg-cyan px-6 font-medium text-ink shadow-[0_0_30px_-6px] shadow-cyan/60 transition-all hover:-translate-y-0.5 hover:bg-fg"
-            >
-              View projects
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex min-h-11 items-center rounded-full border border-violet/60 px-6 font-medium text-violet transition-all hover:-translate-y-0.5 hover:bg-violet hover:text-ink"
-            >
-              Contact us
-            </a>
-            <a
-              href={profile.resumeUrl}
-              download
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-6 font-medium transition-colors hover:border-violet hover:text-violet"
-            >
-              Download résumé
-            </a>
-          </div>
-        </div>
-
-        <div
-          className="hero-reveal lg:col-span-7"
-          style={{ "--i": 2 } as React.CSSProperties}
-        >
-          <div
-            className="float rounded-3xl p-px shadow-[0_30px_80px_-30px] shadow-violet/50"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--color-cyan), var(--color-line) 40%, var(--color-violet))",
-            }}
-          >
-            <Image
-              src={heroImage}
-              alt="Illustration of Shikha Jain, wearing glasses and a purple hoodie, at her desk with React Native code and app mockups on the screen behind her."
-              priority
-              placeholder="blur"
-              sizes="(min-width: 1152px) 660px, (min-width: 1024px) 56vw, 100vw"
-              className="h-auto w-full rounded-3xl"
-            />
+          <div className="hero-orbit hero-reveal relative" style={{ "--i": 2 } as React.CSSProperties}>
+            <div className="orbit-ring orbit-ring-one" aria-hidden="true" />
+            <div className="orbit-ring orbit-ring-two" aria-hidden="true" />
+            <div className="hero-visual">
+              <Image src={heroImage} alt="Illustration of Shikha Jain in a purple hoodie at a futuristic developer workstation." priority placeholder="blur" sizes="(min-width: 1024px) 65vw, 100vw" className="h-full w-full object-cover" />
+              <div className="screen-sheen" aria-hidden="true" />
+            </div>
+            <div className="interface-panel panel-top" aria-hidden="true"><span className="panel-label">BUILD / 028</span><strong>SHIPPED</strong><span className="panel-bars"><i /><i /><i /><i /></span></div>
+            <div className="interface-panel panel-side" aria-hidden="true"><span className="panel-label">CURRENT FOCUS</span><strong>React Native</strong><span className="panel-code">&lt; smooth / scalable / shipped / &gt;</span></div>
+            <div className="interface-panel panel-bottom" aria-hidden="true"><span className="panel-label">SYSTEM STATUS</span><strong><span className="status-dot" /> ONLINE</strong></div>
+            <span className="orbit-tag tag-one">APIs</span><span className="orbit-tag tag-two">iOS + Android</span>
           </div>
         </div>
       </section>
-
-      {/* Tech marquee */}
-      <div
-        className="marquee border-y border-line bg-surface/40 py-4"
-        aria-hidden="true"
-      >
-        <div className="marquee-track font-display text-lg text-muted">
-          {[...tech, ...tech].map((t, i) => (
-            <span
-              key={`${t}-${i}`}
-              className="flex items-center gap-10 whitespace-nowrap"
-            >
-              {t}
-              <span className="size-1.5 rounded-full bg-violet/60" />
-            </span>
-          ))}
-        </div>
-      </div>
     </>
   );
 }
