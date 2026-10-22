@@ -1,49 +1,61 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
+import { profile } from "@/data/data";
+import "./globals.css";
 
-const inter = Inter({ 
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: '--font-inter',
-  display: 'swap',
-})
+  variable: "--font-bricolage",
+  display: "swap",
+});
 
-const jetbrainsMono = JetBrains_Mono({ 
+const body = Hanken_Grotesk({
   subsets: ["latin"],
-  variable: '--font-jetbrains',
-  display: 'swap',
-})
+  variable: "--font-hanken",
+  display: "swap",
+});
+
+const title = `${profile.name} | ${profile.role}`;
+const description = `${profile.role} building Android and iOS apps with React Native, TypeScript and Firebase. ${profile.tagline}`;
 
 export const metadata: Metadata = {
-  title: 'Shikha Jain | React Native Developer',
-  description: 'React Native Developer building high-performance cross-platform mobile apps for Android and iOS. Expert in mobile optimization, full release cycles, and performance tuning.',
-  keywords: ['React Native', 'Mobile Developer', 'iOS', 'Android', 'JavaScript', 'TypeScript', 'Firebase'],
-  authors: [{ name: 'Shikha Jain' }],
+  metadataBase: new URL(profile.siteUrl),
+  title,
+  description,
+  keywords: [
+    "React Native developer",
+    "mobile app developer",
+    "Android",
+    "iOS",
+    "TypeScript",
+    "Firebase",
+    "Bhopal",
+  ],
+  authors: [{ name: profile.name, url: profile.siteUrl }],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: 'Shikha Jain | React Native Developer',
-    description: 'Building high-performance cross-platform mobile apps',
-    type: 'website',
+    title,
+    description,
+    url: profile.siteUrl,
+    siteName: profile.name,
+    type: "website",
+    images: [{ url: "/images/shikha-hero.webp", width: 1600, height: 1195 }],
   },
-}
+  twitter: { card: "summary_large_image", title, description },
+};
 
 export const viewport: Viewport = {
-  themeColor: '#1a1625',
-  width: 'device-width',
+  themeColor: "#120d26",
+  width: "device-width",
   initialScale: 1,
-}
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} bg-background`}>
-      <body className="font-sans antialiased min-h-screen">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body className="min-h-screen">{children}</body>
     </html>
-  )
+  );
 }
